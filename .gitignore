@@ -1,0 +1,16 @@
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.vite/
+
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+.env
+.env.*
+!.env.example
+
+Datasets/LungCT_Dataset/Bengin cases/
+Datasets/LungCT_Dataset/Malignant cases/
+Datasets/LungCT_Dataset/Normal cases/
