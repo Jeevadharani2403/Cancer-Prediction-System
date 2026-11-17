@@ -1,0 +1,282 @@
+RIBBON HAVEN: AI CANCER PREDICTION & HEALTH MANAGEMENT PROJECT
+
+PROJECT OVERVIEW
+
+Ribbon Haven is an AI-powered cancer prediction and health management platform that combines medical image analysis, clinical data prediction, and patient-focused health tracking into one application. The project is designed to help users understand potential cancer risks, explore health trends, review family history, and follow preventive health measures.
+
+The system combines two main machine learning models:
+1. A lung cancer detection model that classifies CT scan images.
+2. A breast cancer prediction model that classifies tabular medical data.
+
+The app is designed as a modern, user-friendly healthcare dashboard that makes complex medical AI outputs easier to interpret for end users.
+
+PROJECT GOALS
+
+- Detect possible cancer risks early using AI
+- Bring together image-based and tabular-based medical prediction
+- Provide users with a dashboard for health monitoring and insights
+- Offer personalized wellness recommendations and reminders
+- Create a patient-friendly healthcare interface
+- Demonstrate end-to-end integration of AI, backend systems, and frontend design
+
+MAIN FEATURES
+
+1. LUNG CANCER DETECTION USING CT IMAGES
+   - Users can upload CT scan images in JPG/JPEG/PNG format.
+   - Images are resized to 224x224 pixels.
+   - Model predicts whether the image belongs to normal, benign, or malignant class.
+   - Image prediction is performed through a Flask-based backend API.
+
+2. BREAST CANCER PREDICTION USING CLINICAL FEATURES
+   - Accepts numeric clinical features from a user or input form.
+   - Uses a trained Random Forest classifier.
+   - Features include metrics like radius, texture, smoothness, compactness, concavity, symmetry, perimeter, and area values.
+   - Prediction output is a malignant or benign classification.
+
+3. HEALTH ANALYSIS DASHBOARD
+   - Displays health score and wellness metrics.
+   - Tracks heart rate, blood pressure, test completion, and health trends.
+   - Includes charts for health score trends and blood biomarkers.
+   - Uses Recharts for visualization.
+
+4. FAMILY CANCER REPORT
+   - Visual family tree representation with hereditary risk levels.
+   - Highlights different risk categories such as high, medium, low, and no known risk.
+   - Demonstrates how hereditary patterns influence preventive care decisions.
+
+5. PERSONALIZED HEALTH CARE MEASURES
+   - Recommends diet, exercise, sleep, stress management, supplements, and prevention habits.
+   - Helps users act on health recommendations to reduce risk and improve lifestyle.
+
+6. AI HEALTH COMPANION (ELIX)
+   - Chatbot-style interface for answering health questions.
+   - Provides general guidance on symptoms, diet, exercise, family history, and test results.
+   - Helps create a more supportive healthcare experience.
+
+7. REMINDERS AND NOTIFICATIONS
+   - Tracks upcoming appointments, medications, and daily routine activities.
+   - Allows users to maintain screenings and adherence to wellness plans.
+   - Includes notification preferences and reminders list.
+
+8. RESPONIVE USER INTERFACE
+   - Modern UI with gradients, cards, and navigation.
+   - Built with a healthcare-focused visual style.
+   - Easy to navigate across dashboard sections.
+
+TECHNICAL STACK
+
+FRONTEND
+- React.js
+- TypeScript
+- Vite
+- Tailwind CSS
+- MUI / Radix UI components
+- Recharts
+- Lucide React icons
+- CSS gradients and custom styling
+
+BACKEND
+- Python
+- Flask
+- Flask-CORS
+- NumPy
+- Pandas
+- Pillow (PIL)
+- TensorFlow / Keras
+- scikit-learn
+- joblib
+- Matplotlib
+
+MACHINE LEARNING / AI
+- MobileNetV2 transfer learning
+- RandomForestClassifier
+- StandardScaler
+- EarlyStopping
+- Class-weight balancing
+- Accuracy, confusion matrix, and classification reports
+- Data augmentation for image datasets
+
+PROJECT ARCHITECTURE
+
+The app is organized into four main layers:
+
+1. FRONTEND LAYER
+   - User interface for navigation, uploads, reports, dashboards, reminders, and chatbot
+   - Built using React and TypeScript
+
+2. API LAYER
+   - Flask backend handles requests from frontend
+   - Provides HTTP endpoints for breast and lung predictions
+
+3. MODEL LAYER
+   - Lung CT deep learning model saved as lung_ct_model.keras
+   - Breast cancer model saved as breast_cancer_model_v2.pkl
+   - Scaler saved as scaler_v2.pkl
+
+4. DATA LAYER
+   - Structured dataset in Cancer_Data.csv
+   - Image dataset in Datasets/LungCT_Dataset
+   - Supporting outputs in Screenshots and Results and Accuracy folders
+
+DATASETS USED
+
+1. BREAST CANCER DATASET
+   File: Datasets/Cancer_Data.csv
+   - Contains tabular cancer diagnostic data
+   - Includes 30 medical features
+   - Target column is diagnosis
+   - Diagnosis labels mapped as:
+     M = 1 (Malignant)
+     B = 0 (Benign)
+
+2. LUNG CT DATASET
+   Folder: Datasets/LungCT_Dataset
+   - CT images collected from medical institutions
+   - Contains normal, benign, and malignant cases
+   - Described as IQ-OTH/NCCD lung cancer dataset
+   - Contains CT slices for classes representing normal, benign, and malignant lung conditions
+
+METHODS USED
+
+BREAST MODEL METHODOLOGY
+- Load data from CSV
+- Remove ID column
+- Map diagnosis labels to numeric values
+- Separate features and target labels
+- Split data into training and testing sets using 80/20 split
+- Scale features with StandardScaler
+- Train RandomForestClassifier with 100 trees
+- Evaluate using accuracy and classification report
+- Save model and scaler using joblib
+
+LUNG MODEL METHODOLOGY
+- Load CT images from directory
+- Use image_dataset_from_directory for train/validation split
+- Resize to 224x224
+- Apply MobileNetV2 preprocessing
+- Use transfer learning with pretrained MobileNetV2 weights
+- Freeze early layers initially
+- Add GlobalAveragePooling2D, dense layers, and dropout for classification
+- Apply class weights to handle imbalance
+- Add EarlyStopping to prevent overfitting
+- Fine-tune deeper layers for improved accuracy
+- Save final model as .keras
+
+EVALUATION METHODS
+- Classification reports
+- Confusion matrices
+- Accuracy and loss curves
+- Validation metrics
+- Visual comparisons of model performance
+
+BACKEND API DETAILS
+
+The backend is developed in Backend/app.py and includes these endpoints:
+
+1. /predict-lung
+   - Accepts image upload
+   - Returns a JSON prediction result
+
+2. /predict-breast
+   - Accepts JSON feature list
+   - Returns clinical prediction result
+
+The backend also enables communication with the React frontend using CORS.
+
+MAIN FILES IN THE PROJECT
+
+Backend/app.py
+- Flask server and API routes
+- Loads saved lung and breast models
+- Handles image and feature predictions
+
+Backend/model2.py
+- Breast cancer model training script
+- Trains and saves the Random Forest model and scaler
+
+Backend/train_lung_model.py
+- Lung cancer model training script
+- Uses transfer learning and deep learning pipeline
+- Saves the trained CT model
+
+Frontend/src/app/App.tsx
+- Main app shell and page routing
+- Navigation between different screens and dashboards
+
+Frontend/src/api.js
+- API helper functions for backend communication
+
+Frontend/src/app/components/*
+- Individual pages for dashboard, chatbot, report analysis, reminders, health measures, and family risk
+
+MODELS AND ARTIFACTS
+
+Stored model files include:
+- Models/breast_cancer_model_v2.pkl
+- Models/scaler_v2.pkl
+- Models/lung_ct_model.keras
+- Backend/lung_ct_model.keras
+- Backend/breast_cancer_model_v2.pkl
+- Backend/scaler_v2.pkl
+
+These model files are used for inference in the live app workflow.
+
+PROJECT OUTPUTS
+
+The repository includes visual results and dashboard screenshot assets, such as:
+- Dashboard screenshots
+- Home page screenshots
+- Family inheritance page
+- Suggestion page
+- Reminder and notification page
+- Health analysis pages
+- Accuracy graph
+- Loss curve
+- ROC curve
+- Confusion matrix
+
+These outputs support both development review and presentation.
+
+HOW TO RUN
+
+BACKEND
+1. Open terminal in Backend folder
+2. Install required packages:
+   pip install flask flask-cors tensorflow pillow joblib scikit-learn pandas numpy matplotlib
+3. Start the backend:
+   python app.py
+4. The API will run on localhost:5000
+
+FRONTEND
+1. Open terminal in Frontend folder
+2. Install dependencies:
+   npm install
+3. Start development server:
+   npm run dev
+4. Open the local Vite frontend in the browser
+
+IMPORTANT DESIGN NOTES
+
+- The project is a strong demonstration of AI in healthcare and health-tech product design.
+- It combines both image analysis and structured tabular analysis.
+- The app is intended as a prototype and academic project with healthcare and AI features, not a full production hospital system.
+- It reflects skills in backend development, machine learning, frontend development, and UX design.
+
+RESUME-FRIENDLY SUMMARY
+
+Built an AI-powered cancer prediction and health monitoring platform that detects lung cancer from CT scans and breast cancer from clinical tabular data. The project integrates a Flask backend with a React frontend, uses TensorFlow/Keras and scikit-learn for model building, and provides a healthcare dashboard with family risk analysis, reminders, a chatbot assistant, and personalized wellness recommendations. This project demonstrates end-to-end skills in machine learning, healthcare AI, full-stack development, and user-centered app design.
+
+FUTURE ENHANCEMENTS
+
+- Real authentication and patient profiles
+- Secure cloud deployment
+- Integration with EMR / hospital systems
+- More cancer types and imaging support
+- Explainable AI for predictions
+- PDF report generation
+- LLM-based medical assistant for real-time personalized answers
+- More advanced risk scoring and data management
+
+FINAL STATEMENT
+
+Ribbon Haven stands as a healthcare-focused AI application that brings machine learning, medical imaging, risk analysis, and digital health support together in one platform. It is an excellent project for showcasing practical AI implementation, healthcare innovation, and multidisciplinary software engineering skills.
